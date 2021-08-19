@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package calculadora;
+import java.lang.Math;
+
 
 /**
  *
@@ -16,12 +18,54 @@ public class frmCalculadora extends javax.swing.JFrame {
      */
     public frmCalculadora() {
         initComponents();
+        TxtRes.setText(String.valueOf("0.0"));
+        
     }
-    boolean operacao_pendente = false; 
+    boolean operacao_solicitada = false; 
     Double valor1 = 0.0;
     Double valor2 = 0.0;
+    Double valor3 = 0.0;
     String operacao = "nada";
     
+    private boolean opSolicitada (boolean op){
+        if(op == false){
+            op = true;
+        }
+        return op;
+    }
+    
+    public void opPendente (){
+        if(operacao != "nada"){
+            if(operacao == "soma"){
+                valor2 = Double.parseDouble(TxtRes.getText());
+                valor3 = valor2+valor1;
+                valor1 = valor3;
+                TxtRes.setText(String.valueOf(valor1));
+            }
+            if(operacao == "sub"){
+                valor3 = valor2;
+                valor1 = valor1-valor2;
+                valor2 = 0.0;
+            }
+            if(operacao == "mul"){
+                valor3 = valor2;
+                valor1 = valor1*valor2;
+                valor2 = 0.0;
+            }
+            if(operacao == "div"){
+                valor3 = valor2;
+                valor1 = valor1/valor2;
+                valor2 = 0.0;
+            }
+            if(operacao == "exp"){
+                valor1 = Math.pow(valor1, 2);
+            }
+            if(operacao == "raiz"){
+                valor1 = Math.sqrt(valor1);
+            }
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +114,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        TxtRes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         TxtRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtResActionPerformed(evt);
@@ -346,46 +391,82 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"1");
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"2");
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"3");
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"4");
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"5");
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"6");
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"7");
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"8");
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+"9");
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -395,8 +476,9 @@ public class frmCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton29ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        TxtRes.setText("");
+        // TODO add your handling code here: 
+        TxtRes.setText("0.0");
+        operacao = "nada";
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -404,7 +486,8 @@ public class frmCalculadora extends javax.swing.JFrame {
         valor1 = Double.parseDouble(TxtRes.getText());
         TxtRes.setText("");
         operacao = "soma";
-        
+        opPendente();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
@@ -427,10 +510,12 @@ public class frmCalculadora extends javax.swing.JFrame {
            }
         }
         if(operacao == "raiz"){
-            TxtRes.setText(String.valueOf(valor1-valor2));
+            valor1 = Math.sqrt(valor1);              
+            TxtRes.setText(String.valueOf(valor1));
         }
         if(operacao == "exp"){
-            TxtRes.setText(String.valueOf(valor1-valor2));
+            valor1 = Math.pow(valor1, 2);
+            TxtRes.setText(String.valueOf(valor1));
         } 
     }//GEN-LAST:event_jButton30ActionPerformed
 
@@ -439,6 +524,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         valor1 = Double.parseDouble(TxtRes.getText());
         TxtRes.setText("");
         operacao = "subtra";
+        opPendente();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -446,6 +532,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         valor1 = Double.parseDouble(TxtRes.getText());
         TxtRes.setText("");
         operacao = "mul";
+        opPendente();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -453,20 +540,24 @@ public class frmCalculadora extends javax.swing.JFrame {
         valor1 = Double.parseDouble(TxtRes.getText());
         TxtRes.setText("");
         operacao = "div";
+        opPendente();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
+        //TxtRes.setText("");
         operacao = "raiz";
+        opPendente();
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
         valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
-        operacao = "exp";        
+        //TxtRes.setText("");
+        operacao = "exp";
+        opPendente();        
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
