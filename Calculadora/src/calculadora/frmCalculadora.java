@@ -17,10 +17,11 @@ public class frmCalculadora extends javax.swing.JFrame {
     public frmCalculadora() {
         initComponents();
     }
+    boolean operacao_pendente = false; 
+    Double valor1 = 0.0;
+    Double valor2 = 0.0;
+    String operacao = "nada";
     
-    Double valor1;
-    Double valor2;
-    String operacao;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,6 +35,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         TxtRes = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -64,6 +66,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
         jButton7.setText("X");
 
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         TxtRes.addActionListener(new java.awt.event.ActionListener() {
@@ -80,14 +84,39 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
 
         jButton2.setText("-");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("/");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("X");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("√x");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("exp");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton10.setText("C");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +189,11 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
 
         jButton20.setText("+/-");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
 
         jButton28.setText("0");
         jButton28.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +210,11 @@ public class frmCalculadora extends javax.swing.JFrame {
         });
 
         jButton30.setText("=");
+        jButton30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton30ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 255));
 
@@ -362,10 +401,79 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
         TxtRes.setText("");
-        
+        operacao = "soma";
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+        // TODO add your handling code here:
+        valor2 = Double.parseDouble(TxtRes.getText());
+        if(operacao == "soma"){
+            TxtRes.setText(String.valueOf(valor1+valor2));
+        }
+        if(operacao == "subtra"){
+            TxtRes.setText(String.valueOf(valor1-valor2));
+        }
+        if(operacao == "mul"){
+            TxtRes.setText(String.valueOf(valor1*valor2));
+        }
+        if(operacao == "div"){
+            if(valor2 == 0){
+                TxtRes.setText("ERRO! Impossivel dividir por zero !");
+            }else{
+            TxtRes.setText(String.valueOf(valor1/valor2));
+           }
+        }
+        if(operacao == "raiz"){
+            TxtRes.setText(String.valueOf(valor1-valor2));
+        }
+        if(operacao == "exp"){
+            TxtRes.setText(String.valueOf(valor1-valor2));
+        } 
+    }//GEN-LAST:event_jButton30ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText("");
+        operacao = "subtra";
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText("");
+        operacao = "mul";
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText("");
+        operacao = "div";
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText("");
+        operacao = "raiz";
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText("");
+        operacao = "exp";        
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+        valor1 = Double.parseDouble(TxtRes.getText());
+        TxtRes.setText(String.valueOf(valor1*(-1))); 
+    }//GEN-LAST:event_jButton20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -428,6 +536,7 @@ public class frmCalculadora extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
