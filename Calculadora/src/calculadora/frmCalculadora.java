@@ -40,11 +40,11 @@ public class frmCalculadora extends javax.swing.JFrame {
         return op;
     }
     
-    private void VerificaIgual(boolean op){
-        if(op == true){
+    private void VerificaIgual(){
+        if(statusIgual){
             TxtRes.setText("");
             TxtValorAcumulado.setText("");           
-            op = false;
+            statusIgual = false;
         }
     }
     
@@ -505,7 +505,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -516,7 +516,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -527,7 +527,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
+        System.out.println(statusIgual);
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -538,7 +539,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -549,7 +550,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -560,7 +561,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -571,7 +572,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -582,7 +583,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -593,7 +594,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
@@ -604,7 +605,7 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
         // TODO add your handling code here:
-        VerificaIgual(statusIgual);
+        VerificaIgual();
         statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
