@@ -22,13 +22,16 @@ public class frmCalculadora extends javax.swing.JFrame {
         TxtValorAcumulado.setText(String.valueOf("0.0"));
         
     }
-
+    boolean statusIgual = false;
+    boolean statusButton = false;
     boolean operacao_solicitada = false;
     boolean operacao_igualdade = false;
+    boolean apertou = false;
     Double valor1 = 0.0;
     Double valor2 = 0.0;
     Double valor3 = 0.0;
     String operacao = "nada";
+    String operacao2 = "nada";
     
     private boolean opSolicitada (boolean op){
         if(op == false){
@@ -37,7 +40,38 @@ public class frmCalculadora extends javax.swing.JFrame {
         return op;
     }
     
-    public void opPendente (){
+    private void VerificaIgual(boolean op){
+        if(op == true){
+            TxtRes.setText("");
+            TxtValorAcumulado.setText("");           
+            op = false;
+        }
+    }
+    
+    private void AtivaDesativa (boolean op){
+        jButton8.setEnabled(op);
+        jButton9.setEnabled(op);
+        jButton11.setEnabled(op);
+        jButton12.setEnabled(op);
+        jButton17.setEnabled(op);
+        jButton15.setEnabled(op);
+        jButton18.setEnabled(op);
+        jButton16.setEnabled(op);
+        jButton20.setEnabled(op);
+        jButton28.setEnabled(op);
+        jButton29.setEnabled(op);
+        jButton19.setEnabled(op);
+        jButton14.setEnabled(op);
+        jButton13.setEnabled(op);
+        jButton6.setEnabled(op);
+        jButton2.setEnabled(op);
+        jButton1.setEnabled(op);
+        jButton5.setEnabled(op);
+        jButton30.setEnabled(op);               
+    }
+    
+    
+    public void opPendente (){       
         if(operacao != "nada"){
             if(operacao == "soma"){
                 valor1 = valor1 + valor2;
@@ -51,15 +85,32 @@ public class frmCalculadora extends javax.swing.JFrame {
                 valor1 = valor1 * valor2;
                 TxtValorAcumulado.setText(String.valueOf(valor1));  
             }
-            if(operacao == "div"){
+            if(operacao == "div"){ 
+                if(valor2 == 0){ 
+                    TxtRes.setText("ERRO! Impossivel dividir por zero!");
+                    TxtValorAcumulado.setText("ERRO!");
+                    AtivaDesativa(false);
+                    
+                    return;
+                }                
                 valor1 = valor1 / valor2;
                 TxtValorAcumulado.setText(String.valueOf(valor1));  
             }
             if(operacao == "exp"){
-                valor1 = Math.pow(valor1, 2);
+                valor2 = Math.pow(valor2, 2);
+                TxtRes.setText(String.valueOf(valor2));
+                TxtValorAcumulado.setText(String.valueOf(valor2));
             }
             if(operacao == "raiz"){
-                valor1 = Math.sqrt(valor1);
+                if(valor2<0){
+                    TxtRes.setText("ERRO! Raiz de Numero negativo!");
+                    TxtValorAcumulado.setText("ERRO!");
+                    AtivaDesativa(false);
+                    return;
+                }
+                valor2 = Math.sqrt(valor2);
+                TxtValorAcumulado.setText(String.valueOf(valor2));
+                TxtRes.setText(String.valueOf(valor2)); 
             }
             operacao_igualdade = false;
         }
@@ -67,9 +118,8 @@ public class frmCalculadora extends javax.swing.JFrame {
     }
     
     public void opIgualdade (){
+        apertou = false;
         if(operacao != "nada"){
-            System.out.println(valor1);
-            System.out.println(valor2);
             if(operacao == "soma"){
                 valor1 = valor1 + valor2;
                 TxtRes.setText(String.valueOf(valor1));              
@@ -83,15 +133,33 @@ public class frmCalculadora extends javax.swing.JFrame {
                 TxtRes.setText(String.valueOf(valor1));  
             }
             if(operacao == "div"){
+                if(valor2 == 0){
+                    TxtRes.setText("ERRO! Impossivel dividir por zero!");
+                    TxtValorAcumulado.setText("ERRO!");
+                    AtivaDesativa(false);
+                    return;
+                }                 
                 valor1 = valor1 / valor2;
                 TxtRes.setText(String.valueOf(valor1));  
             }
             if(operacao == "exp"){
-                valor1 = Math.pow(valor1, 2);
+                operacao = operacao2;
+                opPendente();
+                //valor2 = Math.pow(valor2, 2);
+                TxtRes.setText(String.valueOf(valor1));
             }
             if(operacao == "raiz"){
-                valor1 = Math.sqrt(valor1);
-            }            
+                if(valor2<0){
+                    TxtRes.setText("ERRO! Raiz de Numero negativo!");
+                    TxtValorAcumulado.setText("ERRO!");
+                    AtivaDesativa(false);
+                    return;
+                }
+                operacao = operacao2;
+                opPendente();               
+                //valor1 = Math.sqrt(valor1);
+                TxtRes.setText(String.valueOf(valor1));
+            }           
         }
         
     }
@@ -315,15 +383,12 @@ public class frmCalculadora extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        TxtValorAcumulado.setEditable(false);
         TxtValorAcumulado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         TxtValorAcumulado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtValorAcumuladoActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("Valor acumulado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -334,20 +399,28 @@ public class frmCalculadora extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -368,18 +441,11 @@ public class frmCalculadora extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TxtRes, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                            .addComponent(TxtValorAcumulado))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(TxtRes, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TxtValorAcumulado, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -439,6 +505,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -448,6 +516,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -457,6 +527,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -466,6 +538,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -475,6 +549,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -484,6 +560,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -493,6 +571,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -502,6 +582,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -511,6 +593,8 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
         if(operacao == "nada"){
         operacao = "iniciou";
         TxtRes.setText("");            
@@ -520,6 +604,12 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
         // TODO add your handling code here:
+        VerificaIgual(statusIgual);
+        statusButton = false;
+        if(operacao == "nada"){
+        operacao = "iniciou";
+        TxtRes.setText("");            
+        }
         TxtRes.setText(TxtRes.getText()+".");
     }//GEN-LAST:event_jButton29ActionPerformed
 
@@ -532,67 +622,47 @@ public class frmCalculadora extends javax.swing.JFrame {
         operacao = "nada";
         valor1 = 0.0;
         valor2 = 0.0;
+        apertou = false;
+        AtivaDesativa(true);
+        
         
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(operacao_solicitada){
-        valor2 = Double.parseDouble(TxtRes.getText());    
-        opPendente();
-        operacao = "soma";
-        TxtRes.setText("");
+        if(statusButton){
+          operacao = "soma";  
         }else{
-        valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
-        operacao = "soma";
+            if(operacao_solicitada){
+                valor2 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                opPendente();
+                operacao = "soma";
+        
+            }else{
+                valor1 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                operacao = "soma";
+            }
         }
+        statusButton = true;
         operacao_igualdade = false;
         operacao_solicitada = opSolicitada(operacao_solicitada);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
         // TODO add your handling code here:
+        statusIgual = true;
         if(!operacao_igualdade){
-            valor2 = Double.parseDouble(TxtRes.getText());
+            if(operacao != "raiz" | operacao != "exp"){
+                valor2 = Double.parseDouble(TxtRes.getText());
+            }
             opIgualdade();
-           // if(inicio){
-            //    valor3 = valor1;
-           // }else{
-           //     valor3 = valor2;   
-          //  }
         }else{
             opIgualdade();
         }
         TxtValorAcumulado.setText(String.valueOf("0.0"));
-        /*if(operacao == "soma"){
-            valor1 = valor1 + valor3;
-            TxtRes.setText(String.valueOf(valor1));
-        }
-        if(operacao == "subtra"){
-            valor1 = valor1 - valor3;           
-            TxtRes.setText(String.valueOf(valor1));
-        }
-        if(operacao == "mul"){
-            valor1 = valor1 * valor3;
-            TxtRes.setText(String.valueOf(valor1));
-        }
-        if(operacao == "div"){
-            if(valor3 == 0){
-                TxtRes.setText("ERRO! Impossivel dividir por zero !");
-            }else{
-            valor1 = valor1 / valor3;
-            TxtRes.setText(String.valueOf(valor1));
-           }
-        }
-        if(operacao == "raiz"){
-            valor1 = Math.sqrt(valor1);              
-            TxtRes.setText(String.valueOf(valor1));
-        }
-        if(operacao == "exp"){
-            valor1 = Math.pow(valor1, 2);
-            TxtRes.setText(String.valueOf(valor1));
-        }*/
+
         operacao_igualdade = true;
         operacao_solicitada = false;
         
@@ -600,32 +670,42 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(operacao_solicitada){
-        valor2 = Double.parseDouble(TxtRes.getText());    
-        opPendente();
-        operacao = "subtra";
-        TxtRes.setText("");
+        if(statusButton){
+          operacao = "subtra";  
         }else{
-        valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
-        operacao = "subtra";
+            if(operacao_solicitada){
+            valor2 = Double.parseDouble(TxtRes.getText()); 
+            TxtRes.setText("");
+            opPendente();
+            operacao = "subtra";
+            }else{
+                valor1 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                operacao = "subtra";
+            }
         }
+        statusButton = true;
         operacao_igualdade = false;
         operacao_solicitada = opSolicitada(operacao_solicitada);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        if(operacao_solicitada){
-        valor2 = Double.parseDouble(TxtRes.getText());    
-        opPendente();
-        operacao = "mul";
-        TxtRes.setText("");
+        if(statusButton){
+          operacao = "mul";  
         }else{
-        valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
-        operacao = "mul";
+            if(operacao_solicitada){
+            valor2 = Double.parseDouble(TxtRes.getText());
+            TxtRes.setText("");
+            opPendente();
+            operacao = "mul";
+            }else{
+                valor1 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                operacao = "mul";               
+            }
         }
+        statusButton = true;
         operacao_igualdade = false;
         operacao_solicitada = opSolicitada(operacao_solicitada);
 
@@ -633,35 +713,79 @@ public class frmCalculadora extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(operacao_solicitada){
-        valor2 = Double.parseDouble(TxtRes.getText());    
-        opPendente();
-        operacao = "div";
-        TxtRes.setText("");
+        if(statusButton){
+          operacao = "div";  
         }else{
-        valor1 = Double.parseDouble(TxtRes.getText());
-        TxtRes.setText("");
-        operacao = "div";
+            if(operacao_solicitada){
+            valor2 = Double.parseDouble(TxtRes.getText());
+            TxtRes.setText("");
+            opPendente();
+            operacao = "div";
+            }else{
+            valor1 = Double.parseDouble(TxtRes.getText());
+            TxtRes.setText("");
+            operacao = "div";
+            }
         }
+        statusButton = true;
         operacao_igualdade = false;
         operacao_solicitada = opSolicitada(operacao_solicitada);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        valor1 = Double.parseDouble(TxtRes.getText());
-        //TxtRes.setText("");
-        operacao = "raiz";
-        opPendente();
+        if(statusButton){
+          operacao = "raiz";  
+        }else{
+            statusButton = true;
+            if(operacao_solicitada){
+                valor2 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                if(!apertou){
+                    apertou = true;
+                    operacao2 = operacao;
+                }
+                operacao = "raiz";
+                opPendente();
+            }else{
+                valor2 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                operacao2 = operacao;            
+                operacao = "raiz";
+                opPendente();
+            }
+        }
+        operacao_igualdade = false;
+        operacao_solicitada = opSolicitada(operacao_solicitada);
         
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        valor1 = Double.parseDouble(TxtRes.getText());
-        //TxtRes.setText("");
-        operacao = "exp";
-        opPendente();        
+        if(statusButton){
+          operacao = "exp";  
+        }else{
+            statusButton = true;
+            if(operacao_solicitada){
+                valor2 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                if(!apertou){
+                    apertou = true;
+                    operacao2 = operacao;
+                }
+                operacao = "exp";
+                opPendente();
+            }else{
+                valor2 = Double.parseDouble(TxtRes.getText());
+                TxtRes.setText("");
+                operacao2 = operacao;            
+                operacao = "exp";
+                opPendente();
+            }
+        }
+        operacao_igualdade = false;
+        operacao_solicitada = opSolicitada(operacao_solicitada);
+               
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
